@@ -79,6 +79,104 @@ class Array:
             if i == n:
                 c += 1
         return c
+    
+    def reverse(self):
+        a = [None] * self.size
+        for i in range(0, self.size):
+            a[i] = self.data[(self.size-1) - i]
+        return a
+    
+    def tworeverse(self):
+        i = 0
+        j = self.size - 1
+        while i < j:
+            l = self.data[i]
+            self.data[i] = self.data[j]
+            self.data[j] = l
+            i += 1
+            j -= 1
+        return self.data
+    
+    def rotateleft(self, k):
+        n = self.size
+        if n==0:
+            return self.data
+        
+        k = k % n
+        res = [0] * n
+
+        for i in range(n):
+            res[i] = self.data[(i+k)%n]
+
+        return res
+    
+    def rotateright(self, k):
+        n = self.size
+        if n==0:
+            return self.data
+        
+        k = k % n
+        res = [0] * n
+
+        for i in range(n):
+            res[i] = self.data[(i-k)%n]
+
+        return res
+    
+    def binarysearchiterative(self, k, low, high):
+        while low <= high:
+            mid = low + (high-low)//2
+
+            if self.data[mid] == k:
+                print("Found")
+                return mid
+            elif k > self.data[mid]:
+                low = mid + 1
+            else:
+                high = mid - 1
+
+        print("Not found")
+        return -1
+    
+    def binarysearchrecursive(self, k, low, high):
+        if low > high:
+            return -1
+        
+        mid = low + (high - low) // 2
+
+        if self.data[mid] == k:
+            print("found")
+            return mid
+        elif k > self.data[mid]:
+            return self.binarysearchrecursive(k, mid + 1, high)
+        else:
+            return self.binarysearchrecursive(k, low, mid - 1)
+        
+    def removeduplicates(self):
+        s =set()
+        res = []
+        for i in self.data:
+            if i not in s:
+                s.add(i)
+                res.append(i)
+            else:
+                continue
+        return res
+    
+    def removesorteduplicates(self):
+        self.data = sorted(self.data)
+        if self.size <= 1:
+            return self.data
+        
+        res = [self.data[0]]
+        l, r = 0, 1
+
+        while r < self.size:
+            if self.data[l] != self.data[r]:
+                res.append(self.data[r])
+                l = r
+            r += 1
+        return res 
 
 arr = Array(3)
 print(arr.data)
@@ -103,3 +201,10 @@ print(arr.mini())
 print(arr.sums())
 print(arr.avg())
 print(arr.count(5))
+arr.insertatend(6)
+print(arr.data)
+print(arr.rotateleft(2))
+print(arr.rotateright(2))
+arr.binarysearchiterative(3, 0, len(arr.data))
+arr.binarysearchrecursive(1, 0, len(arr.data))
+print(arr.removesorteduplicates())
