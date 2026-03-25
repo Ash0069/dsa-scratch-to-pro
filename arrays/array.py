@@ -176,7 +176,22 @@ class Array:
                 res.append(self.data[r])
                 l = r
             r += 1
-        return res 
+        return res
+    
+    def movezeroes(self):
+        res = []
+        c = 0
+
+        for i in self.data:
+            if i != 0:
+                res.append(i)
+            else:
+                c += 1
+        
+        for _ in range(c):
+            res.append(0)
+
+        return res
 
 arr = Array(3)
 print(arr.data)
@@ -184,9 +199,9 @@ arr.arrinsert(1)
 arr.arrinsert(2)
 arr.arrinsert(3)
 print(arr.data)
-arr.insertatend(4)
+arr.insertatend(0)
 print(arr.data)
-arr.insertatbeginning(5)
+arr.insertatbeginning(0)
 print(arr.data)
 # arr.deleteend()
 # print(arr.data)
@@ -208,3 +223,4 @@ print(arr.rotateright(2))
 arr.binarysearchiterative(3, 0, len(arr.data))
 arr.binarysearchrecursive(1, 0, len(arr.data))
 print(arr.removesorteduplicates())
+print(arr.movezeroes())
